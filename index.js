@@ -25,7 +25,9 @@ prikey_bs58 = bs58.encode(kp_new.seckey);
 console.log(prikey_bs58)
 kp_com =  new IOST.KeyPair(bs58.decode(prikey_bs58), IOST.Algorithm.Secp256k1)
 
-
+/**
+ * create account
+ */
 const tx = iost.newAccount(
     "yyloveuu",
     "admin",
