@@ -36,3 +36,8 @@ pledge = async function(buyer, receiver, amount) {
         .listen(1000, 10);
 }
 //pledge("admin", "admin", 10000)
+getgasratio  = async function() {
+    const ratio = await rpc.blockchain.getGasRatio();
+    console.log("low:"+ratio["lowest_gas_ratio"]+"\nmedian:"+ratio["median_gas_ratio"])
+}
+//getgasratio()
