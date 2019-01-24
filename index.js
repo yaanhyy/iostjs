@@ -29,7 +29,7 @@ kp_com =  new IOST.KeyPair(bs58.decode(prikey_bs58), IOST.Algorithm.Secp256k1)
  * create account
  */
 const tx = iost.newAccount(
-    "yyloveuu",
+    "hongchuan",
     "admin",
     kp.id,
     kp.id,

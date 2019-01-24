@@ -20,12 +20,12 @@ account.addKeyPair(kp, "active");
 
 tokenSym = "uutoken"
 
-toAccount = "yyloveuu"
-create_token = async  function() {
+toAccount = "hongchuan"
+create_token = async  function(tokenSym, owner) {
 
 // create token
-    const tx = iost.callABI("token.iost", "create", [tokenSym, "admin", 21000000, {
-        "fullName": "bit coin",
+    const tx = iost.callABI("token.iost", "create", [tokenSym, owner, 21000000, {
+        "fullName": "uutoken",
         "decimal": 9
     }]);
     account.signTx(tx);
@@ -37,9 +37,9 @@ create_token = async  function() {
 
 }
 
-//create_token()
+//create_token(tokenSym, "admin")
 
-issue_token = async  function() {
+issue_token = async  function(tokenSym, toAccount) {
 // issue token
     const tx = iost.callABI("token.iost", "issue", [tokenSym, toAccount, "99.1"]);
     account.signTx(tx);
@@ -57,4 +57,4 @@ issue_token = async  function() {
         .listen(1000, 8);
 }
 
-issue_token()
+issue_token(tokenSym, toAccount)
