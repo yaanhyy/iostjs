@@ -63,4 +63,4 @@ get_balance = async function(tokenSym, account) {
     let resBalance = await rpc.blockchain.getBalance(account, tokenSym);
     console.log("account:"+account+"balance:"+resBalance.balance)
 }
-get_balance("uutoken", "admin")
+//get_balance("uutoken", "admin")

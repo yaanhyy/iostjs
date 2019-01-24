@@ -30,4 +30,4 @@ transfer = async function(fromAccount, toAccount, amount, memo) {
         .listen(1000, 90);
 
 }
-transfer("admin","hongchuan", "100","love")
+//transfer("admin","hongchuan", "100","love")

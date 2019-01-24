@@ -35,4 +35,4 @@ pledge = async function(buyer, receiver, amount) {
         .send()
         .listen(1000, 10);
 }
-pledge("admin", "admin", 10000)
+//pledge("admin", "admin", 10000)

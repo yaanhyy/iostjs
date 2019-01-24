@@ -50,4 +50,4 @@ newAccount = async function(creater, accountName, ownerkeyId, activekeyId, initi
         .send()
         .listen(1000, 5);
 }
-newAccount("hongchuan", "lalala", kp.id, kp.id,  1024,  1000)
+//newAccount("hongchuan", "lalala", kp.id, kp.id,  1024,  1000)
