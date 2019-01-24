@@ -17,12 +17,17 @@ const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehs
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
+
+transfer = async function(fromAccount, toAccount, amount, memo) {
 // send a call
-const tx = iost.callABI("token.iost", "transfer", ["iost", "admin", "hongchuan", "10000.000", ""]);
-account.signTx(tx);
+    const tx = iost.callABI("token.iost", "transfer", ["iost", fromAccount, toAccount, amount, memo]);
+    account.signTx(tx);
 
 // send tx and handler result
-const handler = new IOST.TxHandler(tx, rpc);
-handler
-    .send()
-    .listen(1000, 90);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .send()
+        .listen(1000, 90);
+
+}
+transfer("admin","hongchuan", "100","love")

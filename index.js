@@ -14,37 +14,40 @@ const iost = new IOST.IOST({ // will use default setting if not set
     defaultLimit: "1000"
 });
 const account = new IOST.Account("admin");
-const accountList = new Array(3);
 //admin private key to public key
 const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehsLYPEWkUxBWA39oMrZ7ZxuM4fgyXYs2cPwh5n8aNNpH5x2VyK1'));
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
-let kp_new = IOST.KeyPair.newKeyPair(IOST.Algorithm.Secp256k1);
+//generate key
+let kp_new = IOST.KeyPair.newKeyPair();
 prikey_bs58 = bs58.encode(kp_new.seckey);
 console.log(prikey_bs58)
-kp_com =  new IOST.KeyPair(bs58.decode(prikey_bs58), IOST.Algorithm.Secp256k1)
+kp_com =  new IOST.KeyPair(bs58.decode(prikey_bs58))
 
 /**
  * create account
  */
-const tx = iost.newAccount(
-    "hongchuan",
-    "admin",
-    kp.id,
-    kp.id,
-    1024,
-    1000
-);
-account.signTx(tx);
+newAccount = async function(creater, accountName, ownerkeyId, activekeyId, initialRAM, initialGasPledge) {
+    const tx = iost.newAccount(
+        accountName,
+        creater,
+        ownerkeyId,
+        activekeyId,
+        initialRAM,
+        initialGasPledge
+    );
+    account.signTx(tx);
 
-const handler = new IOST.TxHandler(tx, rpc);
-handler
-    .onSuccess(function (response) {
-        console.log("Success... tx, receipt: "+ JSON.stringify(response));
-        accountList[0] = new IOST.Account(myid);
-        accountList[0].addKeyPair(kp, "owner");
-        accountList[0].addKeyPair(kp, "active");
-    })
-    .send()
-    .listen(1000, 5);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .onSuccess(function (response) {
+            console.log("Success... tx, receipt: " + JSON.stringify(response));
+            let accountInfo = new IOST.Account(accountName);
+
+            console.log("accountId:"+accountInfo.getID() )
+        })
+        .send()
+        .listen(1000, 5);
+}
+newAccount("hongchuan", "lalala", kp.id, kp.id,  1024,  1000)
