@@ -17,7 +17,7 @@ const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehs
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
-buy_ram = async  function(buyer, receiver, amount) {
+buy_ram = async function(buyer, receiver, amount) {
     const tx = iost.callABI("ram.iost", "buy", [buyer, receiver, amount]);
     account.signTx(tx);
     const handler = new IOST.TxHandler(tx, rpc);
@@ -27,7 +27,7 @@ buy_ram = async  function(buyer, receiver, amount) {
 }
 //buy_ram("admin", "admin", 10000)
 
-pledge = async  function(buyer, receiver, amount) {
+pledge = async function(buyer, receiver, amount) {
     const tx = iost.callABI("gas.iost", "pledge", [buyer, receiver, amount+""]);
     account.signTx(tx);
     const handler = new IOST.TxHandler(tx, rpc);

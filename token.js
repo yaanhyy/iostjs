@@ -21,7 +21,7 @@ account.addKeyPair(kp, "active");
 tokenSym = "uutoken"
 
 toAccount = "hongchuan"
-create_token = async  function(tokenSym, owner) {
+create_token = async function(tokenSym, owner) {
 
 // create token
     const tx = iost.callABI("token.iost", "create", [tokenSym, owner, 21000000, {
@@ -36,10 +36,9 @@ create_token = async  function(tokenSym, owner) {
 
 
 }
-
 //create_token(tokenSym, "admin")
 
-issue_token = async  function(tokenSym, toAccount) {
+issue_token = async function(tokenSym, toAccount) {
 // issue token
     const tx = iost.callABI("token.iost", "issue", [tokenSym, toAccount, "99.1"]);
     account.signTx(tx);
@@ -57,4 +56,11 @@ issue_token = async  function(tokenSym, toAccount) {
         .listen(1000, 8);
 }
 
-issue_token(tokenSym, toAccount)
+//issue_token(tokenSym, "admin")
+
+get_balance = async function(tokenSym, account) {
+
+    let resBalance = await rpc.blockchain.getBalance(account, tokenSym);
+    console.log("account:"+account+"balance:"+resBalance.balance)
+}
+get_balance("uutoken", "admin")

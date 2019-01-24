@@ -18,7 +18,7 @@ account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
 // send a call
-const tx = iost.callABI("token.iost", "transfer", ["iost", "admin", "hongchuan", "10.000", ""]);
+const tx = iost.callABI("token.iost", "transfer", ["iost", "admin", "hongchuan", "10000.000", ""]);
 account.signTx(tx);
 
 // send tx and handler result
