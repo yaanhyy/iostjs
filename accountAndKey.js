@@ -50,4 +50,56 @@ newAccount = async function(creater, accountName, ownerkeyId, activekeyId, initi
         .send()
         .listen(1000, 5);
 }
-//newAccount("hongchuan", "lalala", kp.id, kp.id,  1024,  1000)
+//newAccount("lalala", "lalala1", kp.id, kp.id, 10,  1)
+
+
+getAccountInfo = async function(accountName, isReversible, feild) {
+    const accountInfo = await rpc.blockchain.getAccountInfo(accountName, isReversible);
+    console.log("accountInfo:"+JSON.stringify(accountInfo))
+    console.log(feild+":"+accountInfo[feild])
+}
+getAccountInfo("hongchuan", true, "vote_infos")
+getAccountInfo("admin", true, "balance")
+
+addPermission =  async function(account, permissionName, threshold) {
+    const tx = iost.callABI("auth.iost", "addPermission", [account, permissionName, threshold]);
+    account = new IOST.Account(account);
+    account.addKeyPair(kp, "owner");
+    account.addKeyPair(kp, "active");
+    account.signTx(tx);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .send()
+        .listen(1000, 10);
+}
+
+//addPermission("hongchuan", "vote", 1)
+
+assignPermission = async function(account, permissionName, pubkey, weight) {
+    const tx = iost.callABI("auth.iost", "assignPermission", [account, permissionName, pubkey, weight]);
+    account = new IOST.Account(account);
+    account.addKeyPair(kp, "owner");
+    account.addKeyPair(kp, "active");
+    account.signTx(tx);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .send()
+        .listen(1000, 10);
+}
+//assignPermission("hongchuan", "vote",  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",1)
+
+applyRegister = async function(account,  pubkeyBase58, Location, websiteUrl, networkId, isProducer) {
+    const tx = iost.callABI("vote_producer.iost", "applyRegister", [account,  pubkeyBase58, Location, websiteUrl, networkId, isProducer]);
+    account = new IOST.Account(account);
+    account.addKeyPair(kp, "owner");
+    account.addKeyPair(kp, "active");
+    tx.addSigner(account, "vote");
+ //   account.sign(tx, "vote");
+    account.signTx(tx);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .send()
+        .listen(1000, 10);
+}
+
+applyRegister("hongchuan", kp.id, "", "network.io" , "", true)
