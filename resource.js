@@ -25,7 +25,7 @@ buy_ram = async function(buyer, receiver, amount) {
         .send()
         .listen(1000, 10);
 }
-//buy_ram("admin", "admin", 10000)
+//buy_ram("admin", "hongchuan", 1000000000)
 
 pledge = async function(buyer, receiver, amount) {
     const tx = iost.callABI("gas.iost", "pledge", [buyer, receiver, amount+""]);
@@ -35,7 +35,7 @@ pledge = async function(buyer, receiver, amount) {
         .send()
         .listen(1000, 10);
 }
-//pledge("admin", "admin", 10000)
+//pledge("admin", "hongchuan", 10000000)
 getgasratio  = async function() {
     const ratio = await rpc.blockchain.getGasRatio();
     console.log("low:"+ratio["lowest_gas_ratio"]+"\nmedian:"+ratio["median_gas_ratio"])

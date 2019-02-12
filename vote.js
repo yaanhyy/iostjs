@@ -45,4 +45,4 @@ getContractStorage  = async function(id,key,field) {
 
 
 
-getContractStorage("vote_producer.iost","producerTable","producer00001")
+//getContractStorage("vote_producer.iost","producerTable","hongchuan")

@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/yaanhyy/iost_js#readme",
   "dependencies": {
-    "iost": "0.0.16"
+    "iost": "0.0.17"
   }
 }

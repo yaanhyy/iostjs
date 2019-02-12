@@ -50,7 +50,7 @@ newAccount = async function(creater, accountName, ownerkeyId, activekeyId, initi
         .send()
         .listen(1000, 5);
 }
-//newAccount("lalala", "lalala1", kp.id, kp.id, 10,  1)
+//newAccount("admin", "lalala", kp.id, kp.id, 1000,  1000)
 
 
 getAccountInfo = async function(accountName, isReversible, feild) {
@@ -60,6 +60,7 @@ getAccountInfo = async function(accountName, isReversible, feild) {
 }
 getAccountInfo("hongchuan", true, "vote_infos")
 getAccountInfo("admin", true, "balance")
+getAccountInfo("lalala", true, "balance")
 
 addPermission =  async function(account, permissionName, threshold) {
     const tx = iost.callABI("auth.iost", "addPermission", [account, permissionName, threshold]);
@@ -73,7 +74,7 @@ addPermission =  async function(account, permissionName, threshold) {
         .listen(1000, 10);
 }
 
-//addPermission("hongchuan", "vote", 1)
+//addPermission("lalala", "vote", 1)
 
 assignPermission = async function(account, permissionName, pubkey, weight) {
     const tx = iost.callABI("auth.iost", "assignPermission", [account, permissionName, pubkey, weight]);
@@ -86,15 +87,15 @@ assignPermission = async function(account, permissionName, pubkey, weight) {
         .send()
         .listen(1000, 10);
 }
-//assignPermission("hongchuan", "vote",  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",1)
+//assignPermission("lalala", "vote",  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",1)
 
-applyRegister = async function(account,  pubkeyBase58, Location, websiteUrl, networkId, isProducer) {
-    const tx = iost.callABI("vote_producer.iost", "applyRegister", [account,  pubkeyBase58, Location, websiteUrl, networkId, isProducer]);
-    account = new IOST.Account(account);
+applyRegister = async function(accountName,  pubkeyBase58, Location, websiteUrl, networkId, isProducer) {
+    const tx = iost.callABI("vote_producer.iost", "applyRegister", [accountName,  pubkeyBase58, Location, websiteUrl, networkId, isProducer]);
+    var account = new IOST.Account(accountName);
     account.addKeyPair(kp, "owner");
     account.addKeyPair(kp, "active");
-    tx.addSigner(account, "vote");
- //   account.sign(tx, "vote");
+    tx.addSigner(account.getID(), "vote");
+   // account.sign(tx, "vote");
     account.signTx(tx);
     const handler = new IOST.TxHandler(tx, rpc);
     handler
@@ -102,4 +103,6 @@ applyRegister = async function(account,  pubkeyBase58, Location, websiteUrl, net
         .listen(1000, 10);
 }
 
-applyRegister("hongchuan", kp.id, "", "network.io" , "", true)
+//applyRegister("lalala", kp.id, "", "network.io" , "", true)
+
+
