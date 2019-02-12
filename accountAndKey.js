@@ -1,8 +1,9 @@
 const IOST = require('iost')
 const bs58 = require('bs58');
+const httpProvider = require('./HttpProvider')
 node = "http://172.18.11.38:30001";
 // use RPC
-const rpc = new IOST.RPC(new IOST.HTTPProvider(node));
+const rpc = new IOST.RPC(new httpProvider(node));
 rpc.blockchain.getChainInfo().then(console.log);
 
 // init iost sdk
@@ -89,20 +90,5 @@ assignPermission = async function(account, permissionName, pubkey, weight) {
 }
 //assignPermission("lalala", "vote",  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",1)
 
-applyRegister = async function(accountName,  pubkeyBase58, Location, websiteUrl, networkId, isProducer) {
-    const tx = iost.callABI("vote_producer.iost", "applyRegister", [accountName,  pubkeyBase58, Location, websiteUrl, networkId, isProducer]);
-    var account = new IOST.Account(accountName);
-    account.addKeyPair(kp, "owner");
-    account.addKeyPair(kp, "active");
-    tx.addSigner(account.getID(), "vote");
-   // account.sign(tx, "vote");
-    account.signTx(tx);
-    const handler = new IOST.TxHandler(tx, rpc);
-    handler
-        .send()
-        .listen(1000, 10);
-}
-
-//applyRegister("lalala", kp.id, "", "network.io" , "", true)
 
 

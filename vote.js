@@ -1,8 +1,9 @@
 const IOST = require('iost')
 const bs58 = require('bs58');
+const httpProvider = require('./HttpProvider')
 node = "http://172.18.11.38:30001";
 // use RPC
-const rpc = new IOST.RPC(new IOST.HTTPProvider(node));
+const rpc = new IOST.RPC(new httpProvider(node));
 rpc.blockchain.getChainInfo().then(console.log);
 // init iost sdk
 const iost = new IOST.IOST({ // will use default setting if not set
@@ -29,20 +30,42 @@ newVote =  async function(voter, memo,  data) {
 }
 //newVote("admin","vote",data)
 
-vote =  async function(voteId, voter, options, amount) {
-    const tx = iost.callABI("vote.iost", "vote", [voteId, voter, options, amount]);
+vote =  async function(voter, candidate, numOfVote) {
+    const tx = iost.callABI("vote_producer.iost", "vote", [voter, candidate, numOfVote]);
     account.signTx(tx);
     const handler = new IOST.TxHandler(tx, rpc);
     handler
         .send()
         .listen(1000, 10);
 }
-//vote("3","admin","admin", "100")
+//vote("admin","hongchuan", "100")
+
 getContractStorage  = async function(id,key,field) {
     const res = await rpc.blockchain.getContractStorage(id,key,field);
     console.log(res)
 }
+getContractStorage("vote_producer.iost","producerTable","lalala")
 
+applyRegister = async function(accountName,  pubkeyBase58, Location, websiteUrl, networkId, isProducer) {
+    const tx = iost.callABI("vote_producer.iost", "applyRegister", [accountName,  pubkeyBase58, Location, websiteUrl, networkId, isProducer]);
+    var account = new IOST.Account(accountName);
+    account.addKeyPair(kp, "owner");
+    account.addKeyPair(kp, "active");
+    tx.addSigner(account.getID(), "vote");
+    // account.sign(tx, "vote");
+    account.signTx(tx);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .send()
+        .listen(1000, 10);
+}
+//applyRegister("lalala", kp.id, "", "network.io" , "", true)
 
-
-//getContractStorage("vote_producer.iost","producerTable","hongchuan")
+logInProducer = async function(id,key,field) {
+    const tx = iost.callABI("vote_producer.iost", "vote", [voter, candidate, numOfVote]);
+    account.signTx(tx);
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .send()
+        .listen(1000, 10);
+}

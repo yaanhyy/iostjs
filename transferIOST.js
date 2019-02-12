@@ -1,8 +1,9 @@
 const IOST = require('iost')
 const bs58 = require('bs58');
+const httpProvider = require('./HttpProvider')
 node = "http://172.18.11.38:30001";
 // use RPC
-const rpc = new IOST.RPC(new IOST.HTTPProvider(node));
+const rpc = new IOST.RPC(new httpProvider(node));
 rpc.blockchain.getChainInfo().then(console.log);
 // init iost sdk
 const iost = new IOST.IOST({ // will use default setting if not set
@@ -30,4 +31,4 @@ transfer = async function(fromAccount, toAccount, amount, memo) {
         .listen(1000, 90);
 
 }
-//transfer("admin","lalala", "10000","love")
+transfer("admin","lalala", "10000","love")
