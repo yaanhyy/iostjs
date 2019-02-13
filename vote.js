@@ -61,11 +61,12 @@ applyRegister = async function(accountName,  pubkeyBase58, Location, websiteUrl,
 }
 //applyRegister("lalala", kp.id, "", "network.io" , "", true)
 
-logInProducer = async function(id,key,field) {
-    const tx = iost.callABI("vote_producer.iost", "vote", [voter, candidate, numOfVote]);
+logInProducer = async function(accountName) {
+    const tx = iost.callABI("vote_producer.iost", "logInProducer", [accountName]);
     account.signTx(tx);
     const handler = new IOST.TxHandler(tx, rpc);
     handler
         .send()
         .listen(1000, 10);
 }
+logInProducer("lalala")
