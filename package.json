@@ -5,18 +5,5 @@
   "main": "accountAndKey.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yaanhyy/iost_js.git"
-  },
-  "author": "hongyuanyang",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yaanhyy/iost_js/issues"
-  },
-  "homepage": "https://github.com/yaanhyy/iost_js#readme",
-  "dependencies": {
-    "iost": "0.0.17"
   }
 }
