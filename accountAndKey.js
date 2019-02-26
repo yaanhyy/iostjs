@@ -1,9 +1,11 @@
 const IOST = require('iost')
 const bs58 = require('bs58');
 const httpProvider = require('./HttpProvider')
-node = "http://172.18.11.38:30001";
+//node_public = "http://35.182.211.144:30001";
+node_public="http://api.iost.io"
+node_local = "http://172.18.11.38:30001";
 // use RPC
-const rpc = new IOST.RPC(new httpProvider(node));
+const rpc = new IOST.RPC(new httpProvider(node_local));
 rpc.blockchain.getChainInfo().then(console.log);
 
 // init iost sdk
@@ -14,12 +16,13 @@ const iost = new IOST.IOST({ // will use default setting if not set
     expiration: 90,
     defaultLimit: "1000"
 });
-const account = new IOST.Account("admin");
+const account = new IOST.Account("hongjichuan");
 //admin private key to public key
-const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehsLYPEWkUxBWA39oMrZ7ZxuM4fgyXYs2cPwh5n8aNNpH5x2VyK1'));
+const kp = new IOST.KeyPair(bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfLTJ2azCN1kofJTTaWTewk8Depq4Czujir6hPNSscrHcE7XNZHM'));
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
+const  kp_account = new IOST.KeyPair(bs58.decode('KWEAFVVVXaZ3aw53VNEyS5mkzbbTAcJaV5DMMraZETzxGQeo9Hpj9mXb3pCCLjiVu2GyYjBQbhqZgM5JM6tW3y3'))
 //generate key
 let kp_new = IOST.KeyPair.newKeyPair();
 prikey_bs58 = bs58.encode(kp_new.seckey);
@@ -51,7 +54,7 @@ newAccount = async function(creater, accountName, ownerkeyId, activekeyId, initi
         .send()
         .listen(1000, 5);
 }
-//newAccount("admin", "lalala", kp.id, kp.id, 1000,  1000)
+newAccount("hongjichuan", "guoguo", kp_account.id, kp_account.id, 10,  10)
 
 
 getAccountInfo = async function(accountName, isReversible, feild) {
@@ -59,9 +62,9 @@ getAccountInfo = async function(accountName, isReversible, feild) {
     console.log("accountInfo:"+JSON.stringify(accountInfo))
     console.log(feild+":"+accountInfo[feild])
 }
-getAccountInfo("hongchuan", true, "vote_infos")
-getAccountInfo("admin", true, "balance")
-getAccountInfo("lalala", true, "balance")
+getAccountInfo("hongjichuan", true, "vote_infos")
+getAccountInfo("hongjichuan", true, "balance")
+getAccountInfo("tatat", true, "balance")
 
 addPermission =  async function(account, permissionName, threshold) {
     const tx = iost.callABI("auth.iost", "addPermission", [account, permissionName, threshold]);
@@ -91,4 +94,8 @@ assignPermission = async function(account, permissionName, pubkey, weight) {
 //assignPermission("lalala", "vote",  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",1)
 
 
-
+getCahinInfo = async function() {
+    const chainInfo = await rpc.blockchain.getChainInfo();
+    console.log("chainInfo:"+JSON.stringify(chainInfo))
+}
+getCahinInfo()

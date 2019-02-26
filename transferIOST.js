@@ -1,10 +1,11 @@
 const IOST = require('iost')
 const bs58 = require('bs58');
 const httpProvider = require('./HttpProvider')
-node = "http://172.18.11.38:30001";
+node_public = "http://35.182.211.144:30001";
+node_local = "http://172.18.11.38:30001";
 // use RPC
-const rpc = new IOST.RPC(new httpProvider(node));
-rpc.blockchain.getChainInfo().then(console.log);
+const rpc = new IOST.RPC(new httpProvider(node_local));
+//rpc.blockchain.getChainInfo().then(console.log);
 // init iost sdk
 const iost = new IOST.IOST({ // will use default setting if not set
     gasRatio: 1,
@@ -31,4 +32,18 @@ transfer = async function(fromAccount, toAccount, amount, memo) {
         .listen(1000, 90);
 
 }
-transfer("admin","lalala", "10000","love")
+transfer("admin","lalala", "10","ok")
+
+getTxReceiptByTxHash =   async function(txId) {
+
+    const receiptInfo = await rpc.transaction.getTxReceiptByTxHash(txId);
+    console.log("receiptInfo:" + JSON.stringify(receiptInfo));
+}
+//getTxReceiptByTxHash("7dGbSTARNKD8JvbfQyArHYbiDEMWN9JWBwgD7CYaJP7c")
+
+getTxByHash =   async function(txId) {
+
+    const txInfo = await rpc.transaction.getTxByHash(txId);
+    console.log("txInfo:" + JSON.stringify(txInfo));
+}
+getTxByHash("3V6K4wk2WwWLzjW1mUNBkH9gmkzC35ZzMmD3VTmXzuqi")
