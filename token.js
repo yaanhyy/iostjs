@@ -13,21 +13,21 @@ const iost = new IOST.IOST({ // will use default setting if not set
     expiration: 90,
 });
 // init admin account
-const account = new IOST.Account("admin");
+const account = new IOST.Account("lalala");
 const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehsLYPEWkUxBWA39oMrZ7ZxuM4fgyXYs2cPwh5n8aNNpH5x2VyK1'));
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
 
-tokenSym = "uutoken"
+tokenSym = "yytoken"
 
 toAccount = "hongchuan"
-create_token = async function(tokenSym, owner) {
+create_token = async function(tokenSym, owner, decimal) {
 
 // create token
     const tx = iost.callABI("token.iost", "create", [tokenSym, owner, 21000000, {
-        "fullName": "uutoken",
-        "decimal": 9
+        "fullName": tokenSym,
+        "decimal": decimal
     }]);
     account.signTx(tx);
     const handler = new IOST.TxHandler(tx, rpc);
@@ -37,11 +37,11 @@ create_token = async function(tokenSym, owner) {
 
 
 }
-//create_token(tokenSym, "admin")
+create_token(tokenSym, "lalala", 9)
 
 issue_token = async function(tokenSym, toAccount) {
 // issue token
-    const tx = iost.callABI("token.iost", "issue", [tokenSym, toAccount, "99.1"]);
+    const tx = iost.callABI("token.iost", "issue", [tokenSym, toAccount, "99999"]);
     account.signTx(tx);
 
     const handler = new IOST.TxHandler(tx, rpc);
@@ -57,7 +57,25 @@ issue_token = async function(tokenSym, toAccount) {
         .listen(1000, 8);
 }
 
-//issue_token(tokenSym, "admin")
+//issue_token(tokenSym, "lalala")
+
+transfer = async function(tokenSym, from, to, amount, memo){
+    const tx = iost.callABI("token.iost", "transfer", [tokenSym, from, to, amount, memo]);
+    account.signTx(tx);
+
+    const handler = new IOST.TxHandler(tx, rpc);
+    handler
+        .onSuccess(async function (response) {
+            console.log("Success... tx, receipt: " + JSON.stringify(response));
+            let nbAdmin = await rpc.blockchain.getBalance(from, tokenSym);
+            let nb0 = await rpc.blockchain.getBalance(to, tokenSym);
+            console.log(nbAdmin.balance)
+            console.log(nb0.balance)
+        })
+        .send()
+        .listen(1000, 8);
+}
+//transfer(tokenSym, "admin", "lalala", 10, "ok")
 
 get_balance = async function(tokenSym, account) {
 
