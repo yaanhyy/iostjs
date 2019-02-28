@@ -37,7 +37,7 @@ create_token = async function(tokenSym, owner, decimal) {
 
 
 }
-create_token(tokenSym, "lalala", 9)
+//create_token(tokenSym, "lalala", 9)
 
 issue_token = async function(tokenSym, toAccount) {
 // issue token
@@ -75,7 +75,7 @@ transfer = async function(tokenSym, from, to, amount, memo){
         .send()
         .listen(1000, 8);
 }
-//transfer(tokenSym, "admin", "lalala", 10, "ok")
+transfer(tokenSym, "admin", "latalala", 10, "ok")
 
 get_balance = async function(tokenSym, account) {
 

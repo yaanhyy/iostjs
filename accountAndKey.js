@@ -16,9 +16,10 @@ const iost = new IOST.IOST({ // will use default setting if not set
     expiration: 90,
     defaultLimit: "1000"
 });
-const account = new IOST.Account("hongjichuan");
+const account = new IOST.Account("admin");
 //admin private key to public key
-const kp = new IOST.KeyPair(bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfLTJ2azCN1kofJTTaWTewk8Depq4Czujir6hPNSscrHcE7XNZHM'));
+//const kp = new IOST.KeyPair(bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfLTJ2azCN1kofJTTaWTewk8Depq4Czujir6hPNSscrHcE7XNZHM'));
+const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehsLYPEWkUxBWA39oMrZ7ZxuM4fgyXYs2cPwh5n8aNNpH5x2VyK1'));
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
@@ -54,8 +55,8 @@ newAccount = async function(creater, accountName, ownerkeyId, activekeyId, initi
         .send()
         .listen(1000, 5);
 }
-newAccount("hongjichuan", "wallethuobi", kp_account.id, kp_account.id, 10,  10)
-
+//newAccount("hongjichuan", "wallethuobi", kp_account.id, kp_account.id, 10,  10)
+newAccount("admin", "lalala", kp_account.id, kp_account.id, 10,  10) //lalala:oWCk1t3foCLqoBFDzSDmpuk5q2wCjQT2G98gZZhzVNtdvEc2JMQv4yetPwSmfJoxnfUhKhYDD1X3gm2XaujpFUR
 
 getAccountInfo = async function(accountName, isReversible, feild) {
     const accountInfo = await rpc.blockchain.getAccountInfo(accountName, isReversible);
