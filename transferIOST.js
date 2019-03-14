@@ -14,9 +14,10 @@ const iost = new IOST.IOST({ // will use default setting if not set
     expiration: 90,
 });
 // init admin account
-const account = new IOST.Account("hongjichuan");
-const kp = new IOST.KeyPair(bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfLTJ2azCN1kofJTTaWTewk8Depq4Czujir6hPNSscrHcE7XNZHM'));
-//const kp = new IOST.KeyPair(bs58.decode('2yquS3ySrGWPEKywCPzX4RTJugqRh7kJSo5aehsLYPEWkUxBWA39oMrZ7ZxuM4fgyXYs2cPwh5n8aNNpH5x2VyK1'));
+var account = new IOST.Account("hongjichuan");
+//raw_pri= bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfLTJ2azCN1kofJTTaWTewk8Depq4Czujir6hPNSscrHcE7XNZHM')
+//const kp = new IOST.KeyPair(bs58.decode('4TLm6bXLLLy37p1RzVefGH7eGmWApuArEaiuh5fwVHimT3Yobo9dKxrSAwNsuLzECMpPNJgjf5Y38rJ8h2atPwr6'));
+var kp = new IOST.KeyPair(bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfLTJ2azCN1kofJTTaWTewk8Depq4Czujir6hPNSscrHcE7XNZHM'));
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
@@ -41,21 +42,46 @@ transfer = async function(fromAccount, toAccount, amount, memo) {
         .listen(1000, 90);
 
 }
- transfer("hongjichuan","huobiwallet", "0.00000001","")
-//transfer("admin","lalala", "0.00000001","")
+
+function sleep(time){
+    for( var temp = Date.now(); Date.now() - temp <= time;);
+}
+
+var rf=require("fs");
+var jsonStr=rf.readFileSync("iost.json","utf-8");
+var accounts = JSON.parse(jsonStr);
+
+
+// for(var i=1000;i<1100;i++) {
+//     account = new IOST.Account(10000+i+"");
+//     kp = new IOST.KeyPair(bs58.decode(accounts[i].privateKey))
+//
+//     account.addKeyPair(kp, "owner");
+//     account.addKeyPair(kp, "active");
+//     transfer(10000+i+"","admin", "0.1","")
+//     sleep(200)
+// }
+
+// for(var i=1100;i<1101;i++) {
+//
+//     transfer("admin",10000+i+"", "0.1","")
+//     sleep(200)
+// }
+//transfer("admin","lalala", "10000000","世界和平")
+//transfer("hongjichuan","lalala", "0.00000001","")
 getTxReceiptByTxHash =   async function(txId) {
 
     const receiptInfo = await rpc.transaction.getTxReceiptByTxHash(txId);
     console.log("receiptInfo:" + JSON.stringify(receiptInfo));
 }
-//getTxReceiptByTxHash("7dGbSTARNKD8JvbfQyArHYbiDEMWN9JWBwgD7CYaJP7c")
+getTxReceiptByTxHash("Hm6iPLH1i1NcYyhzhz9YVecyq5WHQxgxQUNXmDHRH857")
 
 getTxByHash =   async function(txId) {
 
     const txInfo = await rpc.transaction.getTxByHash(txId);
     console.log("txInfo:" + JSON.stringify(txInfo));
 }
-//getTxByHash("F3vs6cQkCPfA4ffGBQrmt4wkmky8MU1cfrDcpnqmDJhP")
+//getTxByHash("74MGEosiPyUjjNkPxMSzTDain44GTKBCmKn8JebW8yTC")
 
 totalSupply = async function(tokenSym) {
 
@@ -74,4 +100,5 @@ totalSupply = async function(tokenSym) {
 
 }
 
+//rpc.blockchain.getChainInfo().then(console.log);
 //totalSupply("iost")

@@ -5,5 +5,8 @@
   "main": "accountAndKey.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "iost": "0.0.21"
   }
 }
