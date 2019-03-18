@@ -24,7 +24,9 @@ const kp = new IOST.KeyPair(bs58.decode('5SnN8qdRqWSenR9j8AWxFVpfoEkeDrQfETRNnfL
 account.addKeyPair(kp, "owner");
 account.addKeyPair(kp, "active");
 
-//var kp_account = new IOST.KeyPair(bs58.decode('4TLm6bXLLLy37p1RzVefGH7eGmWApuArEaiuh5fwVHimT3Yobo9dKxrSAwNsuLzECMpPNJgjf5Y38rJ8h2atPwr6'))
+var kp_pri = bs58.decode('4TLm6bXLLLy37p1RzVefGH7eGmWApuArEaiuh5fwVHimT3Yobo9dKxrSAwNsuLzECMpPNJgjf5Y38rJ8h2atPwr6')
+console.log(kp_pri)
+
 //generate key
 let kp_new = IOST.KeyPair.newKeyPair(Algorithm.Secp256k1);
 prikey_bs58 = bs58.encode(kp_new.seckey);
