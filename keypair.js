@@ -7,7 +7,7 @@ let cache = {}
 function seedFromPhrase(phrase) {
     if (!cache[phrase]) {
         cache[phrase] = phrase.match(/^0x[0-9a-fA-F]{64}$/)
-            ? hexToBytes(phrase)
+            ? oo7.hexToBytes(phrase)
             : new Uint8Array(mnemonicToSeed(phrase).slice(0, 32))
     }
     return cache[phrase]
